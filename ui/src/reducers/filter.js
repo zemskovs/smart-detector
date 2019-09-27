@@ -1,8 +1,8 @@
 import { filterNames } from "../components/filter";
 
 const initialState = {
-	searchQuery: "",
-	filterBy: filterNames.all
+	// searchQuery: "",
+	// filterBy: filterNames.all
 };
 
 export default (state = initialState, action) => {

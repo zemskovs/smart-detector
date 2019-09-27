@@ -5,7 +5,7 @@ import * as filterActions from "../actions/filter";
 
 const mapStateToProps = ({ books, filter }) => {
 	return {
-		filterBy: filter.filterBy
+		// filterBy: filter.filterBy
 	}
 };
 

@@ -93,3 +93,7 @@ def analyze_proposal():
     fill_sentiments(data['proposalId'])
     return jsonify({})
 
+@app.route('/feedback', methods=['GET', "POST"])
+def feedback():
+	data = request.get_json()
+	return jsonify({"ok": 200})

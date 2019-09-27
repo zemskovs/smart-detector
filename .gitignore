@@ -1,10 +1,8 @@
-<<<<<<< b0c36633d3e81784e1cf0f2b5f196b303cabdeb0
 .idea
 __pycache__
 .secret_access_token
 .secret_sentiment_token
 db/test.db
-=======
 # Created by .ignore support plugin (hsz.mobi)
 ### Python template
 # Byte-compiled / optimized / DLL files
@@ -116,4 +114,5 @@ venv.bak/
 result
 data
 
->>>>>>> added the model. need to cleanup resources
+
+node_modules/*
