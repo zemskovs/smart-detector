@@ -1,3 +1,4 @@
+<<<<<<< b0c36633d3e81784e1cf0f2b5f196b303cabdeb0
 Flask>=1.0.2
 Flask-Cors>=0.3.6
 Flask-RESTful>=0.3.6
@@ -5,3 +6,9 @@ Flask-SQLAlchemy>=2.3.2
 vk==2.0.2
 vk_api==11.5.0
 
+=======
+gensim
+pandas
+pymorphy2
+xlrd
+>>>>>>> added the model. need to cleanup resources
