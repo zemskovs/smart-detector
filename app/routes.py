@@ -95,7 +95,7 @@ def update_request(request_id):
     })
 
 
-@app.route('/rotes/new', methods=['GET', "POST"])
+@app.route('/routes/new', methods=['GET', "POST"])
 def create_route():
     data = request.get_json()
     route = TblTaskRoutes()
