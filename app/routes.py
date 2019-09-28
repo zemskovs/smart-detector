@@ -73,7 +73,7 @@ def get_all():
 @app.route('/requests/<int:request_id>', methods=['UPDATE'])
 def update_exact_request(request_id):
     data = request.get_json()
-    existing_request = TblRequests.get(request_id)
+    existing_request = TblRequests.query.get(request_id)
     change = TblStatusChanges()
     change.prev_task_status = existing_request.task_status
     change.new_task_status = StatusEnum(data['task_status'])
@@ -83,9 +83,9 @@ def update_exact_request(request_id):
     existing_request.task_status = StatusEnum(data['task_status'])
     write_record(existing_request, get_db().session)
 
-    category = TblTaskCategories.get(existing_request.category_id)
-    route = TblTaskRoutes.get(category.task_route_id)
-    controller = TblTaskRoutes.get(route.controller_id)
+    category = TblTaskCategories.query.get(existing_request.category_id)
+    route = TblTaskRoutes.query.get(category.task_route_id)
+    controller = TblTaskRoutes.query.get(route.controller_id)
 
     send_message(task_id=existing_request.id,
                  task_text=existing_request.text,
@@ -98,9 +98,9 @@ def update_exact_request(request_id):
 
 @app.route('/requests/<int:request_id>', methods=['GET'])
 def get_exact_request(request_id):
-    req = TblRequests.get(request_id)
+    req = TblRequests.query.get(request_id)
     if req:
-        return jsonify(TblRequests.get(request_id).json())
+        return jsonify(TblRequests.query.get(request_id).json())
     return jsonify({})
 
 
@@ -133,9 +133,9 @@ def all_routes():
 
 @app.route('/routes/<int:request_id>', methods=['GET'])
 def get_exact_route(request_id):
-    req = TblTaskRoutes.get(request_id)
+    req = TblTaskRoutes.query.get(request_id)
     if req:
-        return jsonify(TblTaskRoutes.get(request_id).json())
+        return jsonify(TblTaskRoutes.query.get(request_id).json())
     return jsonify({})
 
 
