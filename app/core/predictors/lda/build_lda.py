@@ -1,7 +1,9 @@
 import os
 
-from dataset_import import import_data
+from app.core.predictors.lda.dataset_import import import_data
 from gensim import corpora, models
+
+from constants.constants import ARTIFACTS_DIR, SAMPLE_DATASET_PATH, LDA_LATENT_TOPICS
 
 
 def build_lda(data, artifacts_path='./result/', num_topics=50):
@@ -19,7 +21,10 @@ def build_lda(data, artifacts_path='./result/', num_topics=50):
 
     tf_idf = models.TfidfModel(corpus)
     corpus_tfidf = tf_idf[corpus]
-    lda = models.LdaModel(corpus_tfidf, id2word=dictionary, num_topics=num_topics)
+    lda = models.LdaModel(corpus_tfidf,
+                          id2word=dictionary,
+                          num_topics=num_topics,
+                          minimum_probability=0.00)
 
     lda_dir = os.path.join(artifacts_path, 'lda')
     os.makedirs(lda_dir, exist_ok=True)
@@ -27,5 +32,5 @@ def build_lda(data, artifacts_path='./result/', num_topics=50):
 
 
 if __name__ == '__main__':
-    raw_data = import_data()
-    build_lda(raw_data)
+    raw_data = import_data(path=SAMPLE_DATASET_PATH)
+    build_lda(raw_data, artifacts_path=ARTIFACTS_DIR, num_topics=LDA_LATENT_TOPICS)
