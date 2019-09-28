@@ -5,6 +5,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { ContentArea } from "./contentArea";
+import { sendForm } from "../helpers/utils";
 
 const alertOptions = ["vk", "email", "telegram"];
 const controlMembers = [
@@ -26,7 +27,7 @@ const implementMembers = [
 // }
 
 export const ProposalRoutes = props => {
-	let [answer, setAnswer] = React.useState();
+	let [answer, setAnswer] = React.useState({ timeStart: 24 });
 
 	return (
 		<ContentArea>
@@ -146,6 +147,9 @@ export const ProposalRoutes = props => {
 								variant="primary"
 								onClick={() => {
 									console.log(answer);
+									sendForm("create_route", answer, res =>
+										console.log(res)
+									);
 								}}
 							>
 								Отправить

@@ -10,59 +10,50 @@ import { ProposalAnswer } from "./proposalAnswer";
 import { useParams } from "react-router-dom";
 import { url } from "../helpers/constants";
 
-const alertOptions = ["vk", "email", "telegram"];
-const controlMembers = [
-	"Иванова Галина Николаевна",
-	"Петрова Валентина Витальевна"
-];
-const implementMembers = [
-	"Петров Николай Андреевич",
-	"Никифоров Владимир Витаельевич"
-];
-
-const statuses = [
-	{
-		status: "Заявка зарегистрирована",
-		date: "29.08.2018",
-		type: "reg"
-	},
-	{
-		status: "Назначен исполнитель",
-		description: "Иванов А.А.",
-		date: "30.08.2018",
-		type: "reg"
-	}
-];
-
 export const ProposalCard = props => {
 	let { id } = useParams();
-	let [answer, setAnswer] = React.useState();
-	const requestResultRef = React.useRef();
-
-	React.useEffect(() => {
-		fetch(`${url}analyze`, {
-			method: "POST",
-			mode: "cors",
-			cache: "no-cache",
-			credentials: "same-origin",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			redirect: "follow",
-			referrer: "no-referrer",
-
-			body: JSON.stringify(id)
-		})
-			.then(res => res.json())
-			.then(answer => (requestResultRef.current = answer));
+	let [answer, setAnswer] = React.useState({
+		date: "",
+		category: ["Сантехника"],
+		statuses: [
+			{
+				status: "Заявка зарегистрирована",
+				date: "29.08.2018",
+				type: "reg"
+			}
+		],
+		controlMembers: [""]
 	});
 
-	const proposal = requestResultRef.current;
+	React.useEffect(() => {
+		let ignore = false;
+		function fetchProposal() {
+			return fetch(`${url}analyze`, {
+				method: "POST",
+				mode: "cors",
+				cache: "no-cache",
+				credentials: "same-origin",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				redirect: "follow",
+				referrer: "no-referrer",
+
+				body: JSON.stringify(id)
+			})
+				.then(res => res.json())
+				.then(a => {
+					if (!ignore) return setAnswer(a);
+				});
+		}
+		fetchProposal();
+		return () => {
+			ignore = true;
+		};
+	}, [id]);
 
 	let proposalID = id;
-	console.log(proposal);
-	const date = 'date';
-	// const { date, statuses, implementMembers } = proposal;
+	const { date, statuses, controlMembers, category } = answer;
 
 	return (
 		<ContentArea>
@@ -91,7 +82,7 @@ export const ProposalCard = props => {
 													})
 												}
 											>
-												{alertOptions.map(x => (
+												{category.map(x => (
 													<option key={x}>{x}</option>
 												))}
 											</Form.Control>

@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 
 export const AddFrom = props => {
 	let [query, setQuery] = React.useState();
-	let history = useHistory()
+	let history = useHistory();
 
 	return (
 		<section className="dashboard-counts">
@@ -32,9 +32,18 @@ export const AddFrom = props => {
 									<Button
 										variant="primary"
 										onClick={() =>
-											sendForm("new", query, res => {
-												history.push(`/card/${res.id}`);
-											})
+											sendForm(
+												"new",
+												{
+													socialNetwork: "vk",
+													fromUrl: query
+												},
+												res => {
+													history.push(
+														`/card/${res.id}`
+													);
+												}
+											)
 										}
 									>
 										Добавить
