@@ -72,17 +72,18 @@ def get_all():
     return jsonify(res)
 
 
-@app.route('/requests/<int:request_id>', methods=['UPDATE'])
+@app.route('/requests/update/<int:request_id>', methods=['POST'])
 def update_exact_request(request_id):
     data = request.get_json()
     existing_request = TblRequests.query.get(request_id)
     change = TblStatusChanges()
     change.prev_task_status = existing_request.task_status
-    change.new_task_status = StatusEnum(data['task_status'])
+    change.new_task_status = StatusEnum(data['taskStatus'])
     change.request_id = existing_request.id
     write_record(change, get_db().session)
 
-    existing_request.task_status = StatusEnum(data['task_status'])
+    existing_request.task_status = StatusEnum(data['taskStatus'])
+    existing_request.category_id = data['categoryId']
     write_record(existing_request, get_db().session)
 
     category = TblTaskCategories.query.get(existing_request.category_id)
