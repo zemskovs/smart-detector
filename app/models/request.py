@@ -22,6 +22,7 @@ class TblRequests(BaseModel):
         statuses = [change.json() for change in changes]
         return {
             'id': self.id,
+            'text': self.text,
             'authorId': self.author_id,
             'categoryId': self.category_id,
             'taskStatus': self.task_status.value,

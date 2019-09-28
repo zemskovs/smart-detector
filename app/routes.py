@@ -3,7 +3,7 @@ from flask import jsonify, request
 
 from app.core.notifications.mailing import send_message
 from app.core.parsers.vk import VKParser
-from app.core.predictors.classify import classify_text
+from app.core.predictors.classify import classify_text, CATEGORIES_MAPPING
 from app.factories.database import get_db
 from app.models.author import TblAuthors
 from app.models.cotroller import TblControllers
@@ -51,7 +51,9 @@ def import_from_post():
         db_request.author_id = author.id
         write_record(db_request, get_db().session)
 
-    db_request.category = classify_text(db_request.text)
+    class_id = classify_text(db_request.text)
+    category = TblTaskCategories.query.filter_by(name=CATEGORIES_MAPPING[str(class_id)]).first()
+    db_request.category_id = category.id
     write_record(db_request, get_db().session)
 
     return jsonify(db_request.json())
