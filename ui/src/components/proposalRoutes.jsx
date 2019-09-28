@@ -5,7 +5,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { ContentArea } from "./contentArea";
-import { sendForm } from "../helpers/utils";
+import { sendForm, findId } from "../helpers/utils";
 import { url } from "../helpers/constants";
 
 const alertOptions = ["vk", "email", "telegram"];
@@ -41,9 +41,13 @@ const methodProps = {
 
 export const ProposalRoutes = props => {
 	let [answer, setAnswer] = React.useState({ timeStart: 24 });
+	let [formAnswer, setFormAnswer] = React.useState({
+		notificationType: "email"
+	});
 
 	React.useEffect(() => {
 		let ignore = false;
+
 		function fetchCategories() {
 			return fetch(`${url}categories/all`, {
 				...methodProps
@@ -55,22 +59,40 @@ export const ProposalRoutes = props => {
 			}).then(res => res.json());
 		}
 		function fetchExecutors() {
-			return fetch(`${url}controllers/all`, {
+			return fetch(`${url}executors/all`, {
 				...methodProps
 			}).then(res => res.json());
 		}
 
-		Promise.all([
-			fetchCategories(),
-			fetchControllers(),
-			fetchExecutors()
-		]).then(values => values.map(value => setAnswer({ ...answer, value })));
+		const answerStructure = {
+			0: "categories",
+			1: "controllers",
+			2: "executor"
+		};
 
+		function all() {
+			return Promise.all([
+				fetchCategories(),
+				fetchControllers(),
+				fetchExecutors()
+			]).then(values => {
+				const result = values.reduce(
+					(acc, value, idx) => {
+						acc[answerStructure[idx]] = value;
+						return acc;
+					},
+					{ answer }
+				);
+
+				if (!ignore) return setAnswer(result);
+			});
+		}
+		all();
 		return () => {
 			ignore = true;
 		};
-	});
-	console.log(answer);
+	}, []);
+
 	return (
 		<ContentArea>
 			<section className="dashboard-counts">
@@ -78,20 +100,27 @@ export const ProposalRoutes = props => {
 					<Row className="row bg-white has-shadow">
 						<Form className="w-100">
 							<Form.Group as={Row}>
-								<Form.Label column>Тип оповещения</Form.Label>
+								<Form.Label column>
+									Название маршрута
+								</Form.Label>
 								<Col>
 									<Form.Control
-										as="select"
-										onChange={e =>
-											setAnswer({
-												...answer,
-												type: e.target.value
+										type="text"
+										onInput={e =>
+											setFormAnswer({
+												...formAnswer,
+												name: e.target.value
 											})
 										}
-									>
-										{alertOptions.map(x => (
-											<option key={x}>{x}</option>
-										))}
+									/>
+								</Col>
+							</Form.Group>
+
+							<Form.Group as={Row}>
+								<Form.Label column>Тип оповещения</Form.Label>
+								<Col>
+									<Form.Control as="select">
+										<option>email</option>
 									</Form.Control>
 								</Col>
 							</Form.Group>
@@ -104,9 +133,11 @@ export const ProposalRoutes = props => {
 									<Form.Control
 										type="number"
 										onInput={e =>
-											setAnswer({
-												...answer,
-												timeStart: e.target.value
+											setFormAnswer({
+												...formAnswer,
+												assignTimeRequired: parseInt(
+													e.target.value
+												)
 											})
 										}
 									/>
@@ -121,9 +152,11 @@ export const ProposalRoutes = props => {
 									<Form.Control
 										type="number"
 										onInput={e =>
-											setAnswer({
-												...answer,
-												timeImplement: e.target.value
+											setFormAnswer({
+												...formAnswer,
+												executionTimeRequired:
+													e.target.value != "" &&
+													parseInt(e.target.value)
 											})
 										}
 									/>
@@ -135,16 +168,22 @@ export const ProposalRoutes = props => {
 								<Col>
 									<Form.Control
 										as="select"
-										onChange={e =>
-											setAnswer({
-												...answer,
-												controlMember: e.target.value
-											})
-										}
+										onChange={e => {
+											setFormAnswer({
+												...formAnswer,
+												controllerId: findId(
+													answer.controllers,
+													e.target.value
+												)
+											});
+										}}
 									>
-										{controlMembers.map(x => (
-											<option key={x}>{x}</option>
-										))}
+										{answer.controllers &&
+											answer.controllers.map(k => (
+												<option key={k.id}>
+													{` ${k.surname} ${k.name} ${k.middleName}`}
+												</option>
+											))}
 									</Form.Control>
 								</Col>
 							</Form.Group>
@@ -154,16 +193,22 @@ export const ProposalRoutes = props => {
 								<Col>
 									<Form.Control
 										as="select"
-										onChange={e =>
-											setAnswer({
-												...answer,
-												implementMember: e.target.value
-											})
-										}
+										onChange={e => {
+											setFormAnswer({
+												...formAnswer,
+												executorId: findId(
+													answer.executor,
+													e.target.value
+												)
+											});
+										}}
 									>
-										{implementMembers.map(x => (
-											<option key={x}>{x}</option>
-										))}
+										{answer.executor &&
+											answer.executor.map(k => (
+												<option key={k.id}>
+													{`${k.surname} ${k.name} ${k.middleName}`}
+												</option>
+											))}
 									</Form.Control>
 								</Col>
 							</Form.Group>
@@ -171,8 +216,9 @@ export const ProposalRoutes = props => {
 							<Button
 								variant="primary"
 								onClick={() => {
-									console.log(answer);
-									sendForm("routes/new", answer, res =>
+									debugger;
+									console.log(formAnswer);
+									sendForm("routes/new", formAnswer, res =>
 										console.log(res)
 									);
 								}}
