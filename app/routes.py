@@ -88,7 +88,12 @@ def analyze_proposal():
 		}
 	)
 
-@app.route('/create_route', methods=['GET', "POST"])
+@app.route('/rotes/new', methods=['GET', "POST"])
+def create_route():
+	data = request.get_json()
+	return jsonify({"ok": 200})
+
+@app.route('/rotes/all', methods=['GET', "POST"])
 def create_route():
 	data = request.get_json()
 	return jsonify({"ok": 200})
