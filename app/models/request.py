@@ -16,6 +16,7 @@ class TblRequests(BaseModel):
     on_control = Column(Boolean, nullable=False, default=False)
 
     def json(self):
+        statuses = []
         return {
             'id': self.id,
             'authorId': self.authorId,
@@ -23,4 +24,5 @@ class TblRequests(BaseModel):
             'categoryId': self.category_id,
             'taskStatus': self.task_status.value,
             'isOnControl': self.on_control,
+            'statuses': []
         }

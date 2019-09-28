@@ -52,51 +52,17 @@ def get_all():
     return jsonify(res)
 
 
-@app.route('/analyze', methods=['GET', 'POST'])
-def analyze_proposal():
-    # data = request.get_json()
-    # if not data:
-    #     data = {
-    #         'proposalId': '1'
-    #     }
-    # fill_sentiments(data['proposalId'])
-    return jsonify(
-		{
-			"category": ["vk"],
-			"date": "28.09.2019",
-			"imlementMembers": [
-				"Петров Николай Андреевич",
-				"Никифоров Владимир Витаельевич"
-			],
-			"controlMembers": [
-				"Иванова Галина Николаевна",
-				"Петрова Валентина Витальевна"
-			],
-			"statuses": [
-				{
-					"status": "Заявка зарегистрирована",
-					"date": "29.08.2018",
-					"type": "reg"
-				},
-				{
-					"status": "Назначен исполнитель",
-					"description": "Иванов А.А.",
-					"date": "30.08.2018",
-					"type": "reg"
-				}
-			]
-		}
-	)
-
 @app.route('/rotes/new', methods=['GET', "POST"])
 def create_route():
-	data = request.get_json()
-	return jsonify({"ok": 200})
+    data = request.get_json()
+    return jsonify({"ok": 200})
+
 
 @app.route('/rotes/all', methods=['GET', "POST"])
 def create_route():
-	data = request.get_json()
-	return jsonify({"ok": 200})
+    data = request.get_json()
+    return jsonify({"ok": 200})
+
 
 @app.route('/feedback', methods=['GET', "POST"])
 def feedback():
