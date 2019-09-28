@@ -4,6 +4,8 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import { url } from "../helpers/constants";
+import { Navbar } from "./navbar";
+import { Footer } from "./footer";
 
 export const Feedback = props => {
 	let [name, setName] = React.useState({});
@@ -28,32 +30,36 @@ export const Feedback = props => {
 	}
 
 	return (
-		<Container>
-			<Row>
-				<Form className="w-100">
-					<Form.Group controlId="exampleForm.ControlInput1">
-						<Form.Label>Email</Form.Label>
-						<Form.Control
-							type="email"
-							placeholder="name@example.com"
-							onInput={e => setName(e.target.value)}
-						/>
-					</Form.Group>
+		<>
+			<Navbar title="Оставить заявку" />
+			<Container style={{ paddingTop: "3em" }}>
+				<Row>
+					<Form className="w-100">
+						<Form.Group controlId="exampleForm.ControlInput1">
+							<Form.Label>Email</Form.Label>
+							<Form.Control
+								type="email"
+								placeholder="name@example.com"
+								onInput={e => setName(e.target.value)}
+							/>
+						</Form.Group>
 
-					<Form.Group controlId="exampleForm.ControlTextarea1">
-						<Form.Label>Жалоба</Form.Label>
-						<Form.Control
-							as="textarea"
-							rows="3"
-							onInput={e => setText(e.target.value)}
-						/>
-					</Form.Group>
-					<Button variant="primary" onClick={sendForm}>
-						Отправить
-					</Button>
-				</Form>
-			</Row>
-		</Container>
+						<Form.Group controlId="exampleForm.ControlTextarea1">
+							<Form.Label>Жалоба</Form.Label>
+							<Form.Control
+								as="textarea"
+								rows="3"
+								onInput={e => setText(e.target.value)}
+							/>
+						</Form.Group>
+						<Button variant="primary" onClick={sendForm}>
+							Отправить
+						</Button>
+					</Form>
+				</Row>
+			</Container>
+			<Footer />
+		</>
 	);
 };
 
@@ -70,4 +76,3 @@ export const Feedback = props => {
 // 	implements: [],
 
 // }
-

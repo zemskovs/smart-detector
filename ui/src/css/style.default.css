@@ -413,9 +413,9 @@ nav.side-navbar a[aria-expanded="true"] {
   background: #EEF5F9;
 }
 
-nav.side-navbar a[aria-expanded="true"]::before {
+/* nav.side-navbar a[aria-expanded="true"]::before {
   content: '\f107';
-}
+} */
 
 nav.side-navbar a i {
   font-size: 1.2em;

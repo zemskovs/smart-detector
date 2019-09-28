@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Navbar } from "./navbar";
 import { Menu } from "./menu";
+import { Footer } from "./footer";
 
 export const ContentArea = props => {
 	return (
@@ -19,13 +20,7 @@ export const ContentArea = props => {
 						</Container>
 					</header>
 					{props.children}
-					<footer className="main-footer">
-						<Container fluid>
-							<Row>
-								<Col md={12}>Хакатон</Col>
-							</Row>
-						</Container>
-					</footer>
+					<Footer />
 				</div>
 			</div>
 		</>

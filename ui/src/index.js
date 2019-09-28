@@ -7,9 +7,10 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Product } from "./components/productPage";
 import { Feedback } from "./components/feedBack";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import "./css/style.default.css"
-import "./css/fontastic.css"
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./css/style.default.css";
+import "./css/fontastic.css";
+import { NewProposalPage } from "./components/newProposalPage";
 
 const store = createStore();
 
@@ -19,11 +20,7 @@ render(
 			<Switch>
 				<Route exact path="/" component={App} />
 				<Route path="/feedback" component={Feedback} />
-				<Route
-					path="/:id"
-					component={Product}
-				/>
-
+				<Route path="/new" component={NewProposalPage} />
 			</Switch>
 		</Provider>
 	</BrowserRouter>,
