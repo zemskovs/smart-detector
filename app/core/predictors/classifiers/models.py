@@ -142,6 +142,7 @@ def load_classifiers():
     svm_model = load(SVM_MODEL_PATH)
 
     nn_model = load_model(NN_MODEL_PATH)
+    nn_model._make_predict_function()
 
     return log_regr, bayes, svm_model, nn_model
 

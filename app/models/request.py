@@ -17,12 +17,12 @@ class TblRequests(BaseModel):
 
     def json(self):
         changes = TblStatusChanges.query.filter_by(request_id=self.id) \
-            .order_by(TblStatusChanges.creation_timestamp.desc())\
+            .order_by(TblStatusChanges.creation_time.desc())\
             .all()
         statuses = [change.json() for change in changes]
         return {
             'id': self.id,
-            'authorId': self.authorId,
+            'authorId': self.author_id,
             'categoryId': self.category_id,
             'taskStatus': self.task_status.value,
             'isOnControl': self.on_control,
