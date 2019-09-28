@@ -28,7 +28,7 @@ export const ProposalCard = props => {
 	React.useEffect(() => {
 		let ignore = false;
 		function fetchProposal() {
-			return fetch(`${url}routes/${id}`, {
+			return fetch(`${url}requests/${id}`, {
 				method: "GET",
 				mode: "cors",
 				cache: "no-cache",
