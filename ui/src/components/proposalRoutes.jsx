@@ -60,11 +60,12 @@ export const ProposalRoutes = props => {
 			}).then(res => res.json());
 		}
 
-		Promise.all(
+		Promise.all([
 			fetchCategories(),
 			fetchControllers(),
 			fetchExecutors()
-		).then(values => values.map(value => setAnswer({ ...answer, value })));
+		]).then(values => values.map(value => setAnswer({ ...answer, value })));
+
 		return () => {
 			ignore = true;
 		};
