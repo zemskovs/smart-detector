@@ -33,25 +33,22 @@ def import_from_post():
     db_request.text = post.title + post.text
     write_record(db_request, get_db().session)
 
-    db_request.task_type = classify_text(db_request.text)
+    db_request.category = classify_text(db_request.text)
     write_record(db_request, get_db().session)
 
     return jsonify(db_request.json())
 
 
-@app.route('/all', methods=['GET'])
+@app.route('/requests/all', methods=['GET'])
 def get_all():
     res = []
-    # for proposal in TblProposals.query.all():
-    #     if not proposal:
-    #         continue
-    #     discussion = TblDiscussions.query.filter_by(proposal_id=proposal.id).first()
-    #     answers = TblAnswers.query.filter_by(discussion_id=discussion.id).all()
-    #
-    #     res.append({
-    #         **proposal.json(),
-    #         'poll': [a.json() for a in answers]
-    #     })
+    for request in TblRequests.query.all():
+        if not request:
+            continue
+
+        res.append({
+            **request.json()
+        })
     return jsonify(res)
 
 

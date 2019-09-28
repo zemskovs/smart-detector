@@ -10,15 +10,17 @@ class TblRequests(BaseModel):
 
     text = Column(Text, nullable=False)
     author_id = Column(Integer, ForeignKey('authors.id'), nullable=True)
-    executor = Column(Integer, ForeignKey('executors.id'), nullable=True)
-    task_type = Column(Integer, ForeignKey('task_categories.id'), nullable=True)
+    executor_id = Column(Integer, ForeignKey('executors.id'), nullable=True)
+    category_id = Column(Integer, ForeignKey('task_categories.id'), nullable=True)
     task_status = Column(STATUS_ENUM_SCHEMA, nullable=False, default=StatusEnum.new)
     on_control = Column(Boolean, nullable=False, default=False)
 
     def json(self):
         return {
             'id': self.id,
-            'name': self.name,
-            'surname': self.surname,
-            'middleName': self.middle_name
+            'authorId': self.authorId,
+            'executorId': self.executor,
+            'categoryId': self.category_id,
+            'taskStatus': self.task_status.value,
+            'isOnControl': self.on_control,
         }
