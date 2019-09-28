@@ -1,5 +1,6 @@
 Flask>=1.0.2
 Flask-Cors>=0.3.6
+Flask-Mail>=0.9.1
 Flask-RESTful>=0.3.6
 Flask-SQLAlchemy>=2.3.2
 gensim
