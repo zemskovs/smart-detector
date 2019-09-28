@@ -60,8 +60,8 @@ export const ProposalCard = props => {
 	const proposal = requestResultRef.current;
 
 	let proposalID = id;
-	console.log(proposal)
-	const { date, statuses, implementMembers,  } = proposal;
+	console.log(proposal);
+	const { date, statuses, implementMembers } = proposal;
 
 	return (
 		<ContentArea>
