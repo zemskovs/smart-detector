@@ -6,6 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { ContentArea } from "./contentArea";
 import { sendForm } from "../helpers/utils";
+import { url } from "../helpers/constants";
 
 const alertOptions = ["vk", "email", "telegram"];
 const controlMembers = [
@@ -26,10 +27,49 @@ const implementMembers = [
 // 	information: string
 // }
 
+const methodProps = {
+	method: "GET",
+	mode: "cors",
+	cache: "no-cache",
+	credentials: "same-origin",
+	headers: {
+		"Content-Type": "application/json"
+	},
+	redirect: "follow",
+	referrer: "no-referrer"
+};
+
 export const ProposalRoutes = props => {
 	let [answer, setAnswer] = React.useState({ timeStart: 24 });
 
+	React.useEffect(() => {
+		let ignore = false;
+		function fetchCategories() {
+			return fetch(`${url}categories/all`, {
+				...methodProps
+			}).then(res => res.json());
+		}
+		function fetchControllers() {
+			return fetch(`${url}controllers/all`, {
+				...methodProps
+			}).then(res => res.json());
+		}
+		function fetchExecutors() {
+			return fetch(`${url}controllers/all`, {
+				...methodProps
+			}).then(res => res.json());
+		}
 
+		Promise.all(
+			fetchCategories(),
+			fetchControllers(),
+			fetchExecutors()
+		).then(values => values.map(value => setAnswer({ ...answer, value })));
+		return () => {
+			ignore = true;
+		};
+	});
+	console.log(answer);
 	return (
 		<ContentArea>
 			<section className="dashboard-counts">
@@ -126,7 +166,6 @@ export const ProposalRoutes = props => {
 									</Form.Control>
 								</Col>
 							</Form.Group>
-
 
 							<Button
 								variant="primary"
