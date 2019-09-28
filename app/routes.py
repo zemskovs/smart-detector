@@ -8,6 +8,7 @@ from app.models.cotroller import TblControllers
 from app.models.executor import TblExecutors
 
 from app.models.request import TblRequests
+from app.models.task_category import TblTaskCategories
 from app.models.task_route import TblTaskRoutes
 from app.utils import write_record
 
@@ -82,6 +83,22 @@ def create_route():
 def all_categories():
     data = request.get_json()
     return jsonify({"ok": 200})
+
+
+@app.route('/categories/new', methods=['GET', "POST"])
+def new_category():
+    data = request.get_json()
+    category = TblTaskCategories()
+    category.name = data['name']
+    category.code = data['code']
+    category.priority = data['priority']
+    category.task_route_id = data['taskRouteId']
+    category.inform_about_accident = data['shouldInformAboutAccident']
+    write_record(category, get_db().session)
+
+    return jsonify({
+        'id': category.id
+    })
 
 
 @app.route('/controllers/all', methods=['GET', "POST"])
