@@ -71,7 +71,7 @@ def get_all():
 
 
 @app.route('/requests/<int:request_id>', methods=['UPDATE'])
-def get_exact_request(request_id):
+def update_exact_request(request_id):
     data = request.get_json()
     existing_request = TblRequests.get(request_id)
     change = TblStatusChanges()
