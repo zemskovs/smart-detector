@@ -1,4 +1,5 @@
 from app.factories.database import get_db
+from app.models.cotroller import TblControllers
 
 from app.models.executor import TblExecutors
 from app.models.task_category import TblTaskCategories
@@ -21,6 +22,18 @@ def fill_database():
     executor2.surname = 'Никифоров'
     executor2.middle_name = 'Витаельевич'
     write_record(executor2, get_db().session)
+
+    controller1 = TblControllers()
+    controller1.name = 'Сергей'
+    controller1.surname = 'Иванов'
+    controller1.middle_name = 'Андреевич'
+    write_record(controller1, get_db().session)
+
+    controller2 = TblControllers()
+    controller2.name = 'Артём'
+    controller2.surname = 'Сидоров'
+    controller2.middle_name = 'Витальевич'
+    write_record(controller2, get_db().session)
 
     task_category1 = TblTaskCategories()
     task_category1.name='Сантехнические работы'

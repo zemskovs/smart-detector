@@ -12,3 +12,12 @@ class StatusEnum(enum.Enum):
 
 
 STATUS_ENUM_SCHEMA = Enum(StatusEnum)
+
+
+class NotificationEnum(enum.Enum):
+    email = 'email'
+    vk = 'vk'
+    tg = 'tg'
+
+
+NOTIFICATION_ENUM_SCHEMA = Enum(NotificationEnum)
