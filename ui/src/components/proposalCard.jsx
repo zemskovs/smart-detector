@@ -28,8 +28,8 @@ export const ProposalCard = props => {
 	React.useEffect(() => {
 		let ignore = false;
 		function fetchProposal() {
-			return fetch(`${url}analyze`, {
-				method: "POST",
+			return fetch(`${url}routes/${id}`, {
+				method: "GET",
 				mode: "cors",
 				cache: "no-cache",
 				credentials: "same-origin",
@@ -37,9 +37,7 @@ export const ProposalCard = props => {
 					"Content-Type": "application/json"
 				},
 				redirect: "follow",
-				referrer: "no-referrer",
-
-				body: JSON.stringify(id)
+				referrer: "no-referrer"
 			})
 				.then(res => res.json())
 				.then(a => {
@@ -53,7 +51,7 @@ export const ProposalCard = props => {
 	}, [id]);
 
 	let proposalID = id;
-	console.log(answer)
+	console.log(answer);
 	const { date, statuses, controlMembers, category } = answer;
 
 	return (
