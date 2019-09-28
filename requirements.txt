@@ -4,10 +4,13 @@ Flask-Mail>=0.9.1
 Flask-RESTful>=0.3.6
 Flask-SQLAlchemy>=2.3.2
 gensim
+keras==2.2.4
+tensorflow==1.13.1
 numpy
 pandas
 pymorphy2
 scikit-learn
+sqlalchemy
 statsmodels
 vk==2.0.2
 vk_api==11.5.0

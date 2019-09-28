@@ -20,19 +20,19 @@ const implementMembers = [
 	"Никифоров Владимир Витаельевич"
 ];
 
-// const statuses = [
-// 	{
-// 		status: "Заявка зарегистрирована",
-// 		date: "29.08.2018",
-// 		type: "reg"
-// 	},
-// 	{
-// 		status: "Назначен исполнитель",
-// 		description: "Иванов А.А.",
-// 		date: "30.08.2018",
-// 		type: "reg"
-// 	}
-// ];
+const statuses = [
+	{
+		status: "Заявка зарегистрирована",
+		date: "29.08.2018",
+		type: "reg"
+	},
+	{
+		status: "Назначен исполнитель",
+		description: "Иванов А.А.",
+		date: "30.08.2018",
+		type: "reg"
+	}
+];
 
 export const ProposalCard = props => {
 	let { id } = useParams();
@@ -61,7 +61,8 @@ export const ProposalCard = props => {
 
 	let proposalID = id;
 	console.log(proposal);
-	const { date, statuses, implementMembers } = proposal;
+	const date = 'date';
+	// const { date, statuses, implementMembers } = proposal;
 
 	return (
 		<ContentArea>

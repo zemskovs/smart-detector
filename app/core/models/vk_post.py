@@ -7,7 +7,7 @@ class VKPost:
         self.num_comments = None
         self.poll = None
 
-    def fill_from_vk_object(self, vk_post, vk_comments):
+    def fill_from_vk_object(self, vk_post, vk_comments=None):
         instance = vk_post['items'][0]
         self.title = instance['text'].split('\n')[0]
         self.text = '\n'.join(instance['text'].split('\n')[1:])
@@ -20,6 +20,8 @@ class VKPost:
             pass
 
     def fill_from_vk_comments(self, vk_comments):
+        if vk_comments is None:
+            return
         self.comments = [VKComment(i) for i in vk_comments['items']]
 
     def fill_from_vk_poll(self, vk_poll):

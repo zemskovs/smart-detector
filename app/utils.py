@@ -1,12 +1,7 @@
-from app.core.sentiment_analysis import analyze_sentiments
-from app.core.spam_analysis import analyze_spam
 from app.factories.database import get_db
-from app.models.answers import TblAnswers
-from app.models.comments import TblComments
-from app.models.counties import TblCounties
-from app.models.discussions import TblDiscussions
-from app.models.proposals import TblProposals
-from app.models.regions import TblRegions
+
+from app.models.executor import TblExecutors
+from app.models.task_category import TblTaskCategories
 
 
 def write_record(record, session):
@@ -15,56 +10,46 @@ def write_record(record, session):
 
 
 def fill_database():
-    region1 = TblRegions()
-    region1.name = 'Chuvashia'
-    region1.region_id = 1
-    write_record(region1, get_db().session)
+    executor1 = TblExecutors()
+    executor1.name = 'Николай'
+    executor1.surname = 'Петров'
+    executor1.middle_name = 'Андреевич'
+    write_record(executor1, get_db().session)
 
-    county1 = TblCounties()
-    county1.name = 'Cheboksary'
-    county1.region_id = 1
-    write_record(county1, get_db().session)
+    executor2 = TblExecutors()
+    executor2.name = 'Владимир'
+    executor2.surname = 'Никифоров'
+    executor2.middle_name = 'Витаельевич'
+    write_record(executor2, get_db().session)
 
-    proposal1 = TblProposals()
-    proposal1.name = 'Ustanovka mosta'
-    proposal1.region_id = 1
-    write_record(proposal1, get_db().session)
+    task_category1 = TblTaskCategories()
+    task_category1.name='Сантехнические работы'
+    write_record(task_category1, get_db().session)
 
-    discussion1 = TblDiscussions()
-    discussion1.type = 'VK'
-    discussion1.proposal_id = 1
-    write_record(discussion1, get_db().session)
+    task_category2 = TblTaskCategories()
+    task_category2.name='Малярные работы'
+    write_record(task_category1, get_db().session)
 
-    comment1 = TblComments()
-    comment1.text = 'want to build it'
-    comment1.discussion_id = 1
-    write_record(comment1, get_db().session)
+    task_category3 = TblTaskCategories()
+    task_category3.name='Облицовочные работы'
+    write_record(task_category3, get_db().session)
 
-    answer1 = TblAnswers()
-    answer1.text = 'option 1'
-    answer1.rate = 100
-    write_record(comment1, get_db().session)
+    task_category4 = TblTaskCategories()
+    task_category4.name='Обойные работы'
+    write_record(task_category4, get_db().session)
 
-    answer2 = TblAnswers()
-    answer2.text = 'option 2'
-    answer2.rate = 100
-    write_record(comment1, get_db().session)
+    task_category5 = TblTaskCategories()
+    task_category5.name='Плотничные работы'
+    write_record(task_category5, get_db().session)
 
+    task_category6 = TblTaskCategories()
+    task_category6.name='Стекольные работы'
+    write_record(task_category6, get_db().session)
 
-def fill_sentiments(proposal_id):
-    proposal = TblProposals.query.get(proposal_id)
-    discussion = TblDiscussions.query.filter_by(proposal_id=proposal.id).first()
-    comments = TblComments.query.filter_by(discussion_id=discussion.id).all()
-    for c in comments:
-        res = analyze_sentiments(c.text)
-        c.polarity = res['polarity']
-        c.confidence = res['confidence']
-        c.positive = res['positive']
-        c.neutral = res['neutral']
-        c.negative = res['negative']
+    task_category7 = TblTaskCategories()
+    task_category7.name='Штукатурные работы'
+    write_record(task_category7, get_db().session)
 
-        # res_spam = analyze_spam(c.text)
-        # c.spam_confidence = res_spam['confidence']
-        # c.is_spam = res_spam['spam']
-
-        write_record(c, get_db().session)
+    task_category8 = TblTaskCategories()
+    task_category8.name='Электромонтажные работы'
+    write_record(task_category8, get_db().session)

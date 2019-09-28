@@ -13,14 +13,7 @@ class VKParser(IParser):
         vk = vk_api.API(session, v='5.84')
         post_id = get_extended_post_id_from_url(url)
         post = vk.wall.getById(posts=post_id, extended=1, copy_history_depth=200)
-        group_id = get_group_id_from_url(url)
-        # TODO: check for comments > 100
-        num_comments = 100
-        post_comments = vk.wall.getComments(owner_id=group_id,
-                                            post_id=int(get_post_id_from_url(url)),
-                                            need_likes=1,
-                                            count=num_comments,
-                                            offset=0)
+
         result_post = VKPost()
-        result_post.fill_from_vk_object(post, post_comments)
+        result_post.fill_from_vk_object(post)
         return result_post
