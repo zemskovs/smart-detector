@@ -53,6 +53,11 @@ export const ProposalRoutes = props => {
 				...methodProps
 			}).then(res => res.json());
 		}
+		function fetchRoutes() {
+			return fetch(`${url}routes/all`, {
+				...methodProps
+			}).then(res => res.json());
+		}
 		function fetchControllers() {
 			return fetch(`${url}controllers/all`, {
 				...methodProps
@@ -67,14 +72,16 @@ export const ProposalRoutes = props => {
 		const answerStructure = {
 			0: "categories",
 			1: "controllers",
-			2: "executor"
+			2: "executor",
+			3: "ololo"
 		};
 
 		function all() {
 			return Promise.all([
 				fetchCategories(),
 				fetchControllers(),
-				fetchExecutors()
+				fetchExecutors(),
+				fetchRoutes()
 			]).then(values => {
 				const result = values.reduce(
 					(acc, value, idx) => {
@@ -217,6 +224,7 @@ export const ProposalRoutes = props => {
 								variant="primary"
 								onClick={() => {
 									debugger;
+									console.log(answer)
 									console.log(formAnswer);
 									sendForm("routes/new", formAnswer, res =>
 										console.log(res)
