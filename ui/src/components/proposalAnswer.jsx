@@ -12,10 +12,10 @@ export const ProposalAnswer = props => {
 						<Form.Label column>Описание</Form.Label>
 						<Form.Control as="textarea" readOnly />
 					</Form.Group>
-					<Form.Group>
+					{/* <Form.Group>
 						<Form.Label column>Ответ</Form.Label>
 						<Form.Control as="textarea" rows={3} />
-					</Form.Group>
+					</Form.Group> */}
 				</Form>
 			</Col>
 		</Row>

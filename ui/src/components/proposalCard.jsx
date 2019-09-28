@@ -53,6 +53,7 @@ export const ProposalCard = props => {
 	}, [id]);
 
 	let proposalID = id;
+	console.log(answer)
 	const { date, statuses, controlMembers, category } = answer;
 
 	return (
@@ -180,20 +181,17 @@ export const ProposalCard = props => {
 									<Button
 										variant="primary"
 										onClick={() => {
-											console.log(answer);
+											fetch(`${url}requests/${id}`, {
+												method: "UPDATE",
+												body: JSON.stringify({
+													task_status: "in_progress"
+												})
+											});
 										}}
 									>
 										Взять в работу
 									</Button>
 								</div>
-								<Button
-									variant="primary"
-									onClick={() => {
-										console.log(answer);
-									}}
-								>
-									Отменить назначение
-								</Button>
 							</Row>
 						</Col>
 					</Row>
