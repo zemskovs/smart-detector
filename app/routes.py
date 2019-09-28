@@ -7,6 +7,7 @@ from app.core.predictors.classify import classify_text
 from app.factories.database import get_db
 from app.models.author import TblAuthors
 from app.models.cotroller import TblControllers
+from app.models.enumerates import StatusEnum
 from app.models.executor import TblExecutors
 
 from app.models.request import TblRequests
@@ -75,11 +76,11 @@ def update_request(request_id):
     existing_request = TblRequests.get(request_id)
     change = TblStatusChanges()
     change.prev_task_status = existing_request.task_status
-    change.new_task_status = data['task_status']
+    change.new_task_status = StatusEnum(data['task_status'])
     change.request_id = existing_request.id
     write_record(change, get_db().session)
 
-    existing_request.task_status = data['task_status']
+    existing_request.task_status = StatusEnum(data['task_status'])
     write_record(existing_request, get_db().session)
 
     category = TblTaskCategories.get(existing_request.category_id)
