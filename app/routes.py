@@ -4,6 +4,7 @@ from flask import jsonify, request
 from app.core.parsers.vk import VKParser
 from app.core.predictors.classify import classify_text
 from app.factories.database import get_db
+from app.models.author import TblAuthors
 from app.models.cotroller import TblControllers
 from app.models.executor import TblExecutors
 
@@ -27,15 +28,25 @@ def import_from_post():
             'fromUrl': 'https://vk.com/club184648030?w=wall-184648030_32%2Fall',
         }
     net = data['socialNetwork']
-    if net != 'vk':
+    if net != 'vk' and net != 'email':
         raise NotImplementedError
 
-    parser = VKParser()
-    post = parser.parse(data['fromUrl'])
+    if net == 'vk':
+        parser = VKParser()
+        post = parser.parse(data['fromUrl'])
 
-    db_request = TblRequests()
-    db_request.text = post.title + post.text
-    write_record(db_request, get_db().session)
+        db_request = TblRequests()
+        db_request.text = post.title + post.text
+        write_record(db_request, get_db().session)
+    else:
+        author = TblAuthors()
+        author.name = data['name']
+        write_record(author, get_db().session)
+
+        db_request = TblRequests()
+        db_request.text = data['text']
+        db_request.author_id = author.id
+        write_record(db_request, get_db().session)
 
     db_request.category = classify_text(db_request.text)
     write_record(db_request, get_db().session)
@@ -74,15 +85,23 @@ def create_route():
 
 
 @app.route('/rotes/all', methods=['GET', "POST"])
-def create_route():
-    data = request.get_json()
-    return jsonify({"ok": 200})
+def all_routes():
+    res = []
+    for request in TblTaskRoutes.query.all():
+        res.append({
+            **request.json()
+        })
+    return jsonify(res)
 
 
 @app.route('/categories/all', methods=['GET', "POST"])
 def all_categories():
-    data = request.get_json()
-    return jsonify({"ok": 200})
+    res = []
+    for request in TblTaskCategories.query.all():
+        res.append({
+            **request.json()
+        })
+    return jsonify(res)
 
 
 @app.route('/categories/new', methods=['GET', "POST"])
@@ -119,9 +138,3 @@ def all_executors():
             **request.json()
         })
     return jsonify(res)
-
-
-@app.route('/feedback', methods=['GET', "POST"])
-def feedback():
-    data = request.get_json()
-    return jsonify({"ok": 200})
