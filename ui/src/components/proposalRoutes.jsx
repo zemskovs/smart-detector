@@ -29,6 +29,7 @@ const implementMembers = [
 export const ProposalRoutes = props => {
 	let [answer, setAnswer] = React.useState({ timeStart: 24 });
 
+
 	return (
 		<ContentArea>
 			<section className="dashboard-counts">
@@ -126,28 +127,12 @@ export const ProposalRoutes = props => {
 								</Col>
 							</Form.Group>
 
-							<Form.Group as={Row}>
-								<Form.Label column>
-									Информация об аварии/событии
-								</Form.Label>
-								<Col>
-									<Form.Control
-										type="text"
-										onInput={e =>
-											setAnswer({
-												...answer,
-												information: e.target.value
-											})
-										}
-									/>
-								</Col>
-							</Form.Group>
 
 							<Button
 								variant="primary"
 								onClick={() => {
 									console.log(answer);
-									sendForm("create_route", answer, res =>
+									sendForm("routes/new", answer, res =>
 										console.log(res)
 									);
 								}}
