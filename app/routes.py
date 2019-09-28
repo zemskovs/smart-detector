@@ -1,6 +1,7 @@
 from app import app
 from flask import jsonify, request
 
+from app.core.notifications.mailing import send_message
 from app.core.parsers.vk import VKParser
 from app.core.predictors.classify import classify_text
 from app.factories.database import get_db
@@ -9,6 +10,7 @@ from app.models.cotroller import TblControllers
 from app.models.executor import TblExecutors
 
 from app.models.request import TblRequests
+from app.models.status_changes import TblStatusChanges
 from app.models.task_category import TblTaskCategories
 from app.models.task_route import TblTaskRoutes
 from app.utils import write_record
@@ -19,7 +21,7 @@ def home():
     return app.send_static_file('index.html')
 
 
-@app.route('/new', methods=['POST', 'GET'])
+@app.route('/requests/new', methods=['POST', 'GET'])
 def import_from_post():
     data = request.get_json()
     if True:  # not data:
@@ -57,14 +59,40 @@ def import_from_post():
 @app.route('/requests/all', methods=['GET'])
 def get_all():
     res = []
-    for request in TblRequests.query.all():
-        if not request:
+    for r in TblRequests.query.all():
+        if not r:
             continue
 
         res.append({
-            **request.json()
+            **r.json()
         })
     return jsonify(res)
+
+
+@app.route('/requests/<int:request_id>', methods=['UPDATE'])
+def update_request(request_id):
+    data = request.get_json()
+    existing_request = TblRequests.get(request_id)
+    change = TblStatusChanges()
+    change.prev_task_status = existing_request.task_status
+    change.new_task_status = data['task_status']
+    change.request_id = existing_request.id
+    write_record(change, get_db().session)
+
+    existing_request.task_status = data['task_status']
+    write_record(existing_request, get_db().session)
+
+    category = TblTaskCategories.get(existing_request.category_id)
+    route = TblTaskRoutes.get(category.task_route_id)
+    controller = TblTaskRoutes.get(route.controller_id)
+
+    send_message(task_id=existing_request.id,
+                 task_text=existing_request.text,
+                 recipients=(controller.email, ))
+
+    return jsonify({
+        'ok': 200
+    })
 
 
 @app.route('/rotes/new', methods=['GET', "POST"])
@@ -87,9 +115,9 @@ def create_route():
 @app.route('/rotes/all', methods=['GET', "POST"])
 def all_routes():
     res = []
-    for request in TblTaskRoutes.query.all():
+    for r in TblTaskRoutes.query.all():
         res.append({
-            **request.json()
+            **r.json()
         })
     return jsonify(res)
 
@@ -97,9 +125,9 @@ def all_routes():
 @app.route('/categories/all', methods=['GET', "POST"])
 def all_categories():
     res = []
-    for request in TblTaskCategories.query.all():
+    for r in TblTaskCategories.query.all():
         res.append({
-            **request.json()
+            **r.json()
         })
     return jsonify(res)
 
@@ -123,9 +151,9 @@ def new_category():
 @app.route('/controllers/all', methods=['GET', "POST"])
 def all_controllers():
     res = []
-    for request in TblControllers.query.all():
+    for r in TblControllers.query.all():
         res.append({
-            **request.json()
+            **r.json()
         })
     return jsonify(res)
 
@@ -133,8 +161,8 @@ def all_controllers():
 @app.route('/executors/all', methods=['GET', "POST"])
 def all_executors():
     res = []
-    for request in TblExecutors.query.all():
+    for r in TblExecutors.query.all():
         res.append({
-            **request.json()
+            **r.json()
         })
     return jsonify(res)

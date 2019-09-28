@@ -14,7 +14,9 @@ class TblStatusChanges(BaseModel):
     def json(self):
         return {
             'id': self.id,
-            'name': self.name,
-            'surname': self.surname,
-            'middleName': self.middle_name
+            'requestId': self.request_id,
+            'previousTaskStatus': self.prev_task_status.value,
+            'newTaskStatus': self.new_task_status,
+            'creationTimestamp': self.creation_time,
+            'lastModifiedTimestamp': self.last_modified,
         }
