@@ -85,7 +85,7 @@ def all_categories():
 
 
 @app.route('/controllers/all', methods=['GET', "POST"])
-def all_categories():
+def all_controllers():
     res = []
     for request in TblControllers.query.all():
         res.append({
@@ -95,7 +95,7 @@ def all_categories():
 
 
 @app.route('/executors/all', methods=['GET', "POST"])
-def all_categories():
+def all_executors():
     res = []
     for request in TblExecutors.query.all():
         res.append({
