@@ -123,6 +123,14 @@ def all_routes():
     return jsonify(res)
 
 
+@app.route('/rotes/<int:request_id>', methods=['GET'])
+def all_routes(request_id):
+    req = TblTaskRoutes.get(request_id)
+    if req:
+        return jsonify(TblTaskRoutes.get(request_id).json())
+    return jsonify({})
+
+
 @app.route('/categories/all', methods=['GET', "POST"])
 def all_categories():
     res = []
