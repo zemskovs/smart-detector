@@ -33,7 +33,7 @@ export const AddFrom = props => {
 										variant="primary"
 										onClick={() =>
 											sendForm(
-												"new",
+												"requests/new",
 												{
 													socialNetwork: "vk",
 													fromUrl: query
