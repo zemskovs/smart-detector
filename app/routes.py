@@ -96,6 +96,14 @@ def get_exact_request(request_id):
     })
 
 
+@app.route('/requests/<int:request_id>', methods=['GET'])
+def get_exact_request(request_id):
+    req = TblRequests.get(request_id)
+    if req:
+        return jsonify(TblRequests.get(request_id).json())
+    return jsonify({})
+
+
 @app.route('/routes/new', methods=['GET', "POST"])
 def create_route():
     data = request.get_json()
@@ -113,7 +121,7 @@ def create_route():
     })
 
 
-@app.route('/rotes/all', methods=['GET', "POST"])
+@app.route('/routes/all', methods=['GET', "POST"])
 def all_routes():
     res = []
     for r in TblTaskRoutes.query.all():
@@ -123,8 +131,8 @@ def all_routes():
     return jsonify(res)
 
 
-@app.route('/rotes/<int:request_id>', methods=['GET'])
-def all_routes(request_id):
+@app.route('/routes/<int:request_id>', methods=['GET'])
+def get_exact_route(request_id):
     req = TblTaskRoutes.get(request_id)
     if req:
         return jsonify(TblTaskRoutes.get(request_id).json())
