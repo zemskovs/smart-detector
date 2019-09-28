@@ -17,7 +17,7 @@ class TblTaskRoutes(BaseModel):
     def json(self):
         return {
             'id': self.id,
-            'notificationType': self.notification_type,
+            'notificationType': self.notification_type.value,
             'assignTimeRequired': self.assign_time_required,
             'executionTimeRequired': self.execution_time_required,
             'controllerId': self.controller_id,
