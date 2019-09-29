@@ -16,7 +16,7 @@ class TblStatusChanges(BaseModel):
             'id': self.id,
             'requestId': self.request_id,
             'previousTaskStatus': self.prev_task_status.value,
-            'newTaskStatus': self.new_task_status,
+            'newTaskStatus': self.new_task_status.value,
             'creationTimestamp': self.creation_time,
             'lastModifiedTimestamp': self.last_modified,
         }

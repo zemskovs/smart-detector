@@ -88,12 +88,13 @@ def update_exact_request(request_id):
     write_record(existing_request, get_db().session)
 
     category = TblTaskCategories.query.get(existing_request.category_id)
-    route = TblTaskRoutes.query.get(category.task_route_id)
-    controller = TblTaskRoutes.query.get(route.controller_id)
+    if category.task_route_id:
+        route = TblTaskRoutes.query.get(category.task_route_id)
+        controller = TblTaskRoutes.query.get(route.controller_id)
 
-    send_message(task_id=existing_request.id,
-                 task_text=existing_request.text,
-                 recipients=(controller.email, ))
+        send_message(task_id=existing_request.id,
+                     task_text=existing_request.text,
+                     recipients=(controller.email, ))
 
     return jsonify({
         'ok': 200
