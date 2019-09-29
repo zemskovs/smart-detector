@@ -94,6 +94,7 @@ export const ProposalCard = props => {
 	let proposalID = id;
 	const { text } = answer.proposal;
 	categoryCurrent.current = findById(answer.categories, answer.proposal.id);
+	const category = findById(answer.categories, answer.proposal.categoryId)
 	const statusTypeToName = {
 		new: "Новая заявка",
 		in_progress: "В работе"
@@ -127,8 +128,7 @@ export const ProposalCard = props => {
 												{categoryCurrent.current && (
 													<option>
 														{
-															categoryCurrent
-																.current.name
+															category && category.name
 														}
 													</option>
 												)}
@@ -275,6 +275,7 @@ export const ProposalCard = props => {
 													body: JSON.stringify(body)
 												}
 											);
+											location.reload();
 										}}
 									>
 										Сохранить изменения
