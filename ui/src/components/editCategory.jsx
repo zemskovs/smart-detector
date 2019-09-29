@@ -10,10 +10,12 @@ import { url } from "../helpers/constants";
 import { sendForm } from "../helpers/utils";
 import { useHistory, useParams } from "react-router-dom";
 import { findById } from "../helpers/utils";
+import {methodProps} from "./proposalRoutes"
 
 export const EditCategoryPage = props => {
 	let { id } = useParams();
 	let history = useHistory();
+	let answerRef = React.useRef();
 	let [answer, setAnswer] = React.useState([
 		{
 			id: null
@@ -42,7 +44,11 @@ export const EditCategoryPage = props => {
 					}
 				});
 		}
+
+
+
 		fetchProposal();
+
 		return () => {
 			ignore = true;
 		};
@@ -166,7 +172,7 @@ export const EditCategoryPage = props => {
 											/>
 										</Form.Group>
 										<Form.Group as={Row}>
-											<Button
+											{/* <Button
 												variant="primary"
 												onClick={() => {
 													console.log(answer);
@@ -181,8 +187,8 @@ export const EditCategoryPage = props => {
 													// );
 												}}
 											>
-												Добавить
-											</Button>
+												Сохранить
+											</Button> */}
 										</Form.Group>
 									</Form>
 								</div>
