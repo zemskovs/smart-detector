@@ -226,6 +226,34 @@ export const ProposalCard = props => {
 						<Col md={12}>
 							<Row>
 								<div style={{ paddingRight: "3em" }}>
+									{answer.proposal &&
+										answer.proposal.taskStatus == "new" && (
+											<div className="pr-3">
+												<Button
+													variant="primary"
+													onClick={() => {
+														const body = {
+															...formAnswer,
+															taskStatus:
+																"in_progress"
+														};
+
+														fetch(
+															`${url}requests/update/${id}`,
+															{
+																...methodProps,
+																method: "POST",
+																body: JSON.stringify(
+																	body
+																)
+															}
+														);
+													}}
+												>
+													Взять в работу
+												</Button>
+											</div>
+										)}
 									<Button
 										variant="primary"
 										onClick={() => {
@@ -244,7 +272,7 @@ export const ProposalCard = props => {
 											);
 										}}
 									>
-										Взять в работу
+										Сохранить изменения
 									</Button>
 								</div>
 							</Row>
