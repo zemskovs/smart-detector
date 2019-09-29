@@ -30,6 +30,7 @@ export const AllProposalControl = props => {
 			})
 				.then(res => res.json())
 				.then(a => {
+					console.log(a)
 					if (!ignore)
 						return setAnswer(
 							a.filter(n => n.taskStatus == props.status)
@@ -42,6 +43,8 @@ export const AllProposalControl = props => {
 		};
 	}, []);
 
+	console.log(answer)
+
 	return (
 		<ContentArea
 			title={
@@ -49,7 +52,7 @@ export const AllProposalControl = props => {
 					? "Новые заявки"
 					: props.status == "new"
 					? "Заявки на контроле"
-					: props.status == "inProgress"
+					: props.status == "in_progress"
 					? "В работе"
 					: "Просроченные"
 			}
