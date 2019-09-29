@@ -209,7 +209,7 @@ export const ProposalCard = props => {
 						<Col md={6}>
 							<ProposalStatusControl
 								items={
-									answer.proposal.statuses && answer.proposal.statuses.map((x, idx) => ({
+									answer.proposal.statuses.length > 1 && answer.proposal.statuses.map((x, idx) => ({
 										status:
 											statusTypeToName[x.newTaskStatus],
 										type: x.newTaskStatus
