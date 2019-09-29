@@ -49,7 +49,7 @@ export const AllProposalControl = props => {
 					? "Новые заявки"
 					: props.status == "new"
 					? "Заявки на контроле"
-					: props.status == "onWork"
+					: props.status == "inProgress"
 					? "В работе"
 					: "Просроченные"
 			}
