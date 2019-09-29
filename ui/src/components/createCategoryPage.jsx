@@ -6,8 +6,44 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { AllCategory } from "./allCategory";
+import { url } from "../helpers/constants";
+import { sendForm } from "../helpers/utils";
 
 export const CreateCategoryPage = props => {
+	let [answer, setAnswer] = React.useState([
+		{
+			id: null
+		}
+	]);
+	let [formAnswer, setFormAnswer] = React.useState({
+		shouldInformAboutAccident: false
+	});
+
+	React.useEffect(() => {
+		let ignore = false;
+		function fetchProposal() {
+			return fetch(`${url}routes/all`, {
+				method: "GET",
+				mode: "cors",
+				cache: "no-cache",
+				credentials: "same-origin",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				redirect: "follow",
+				referrer: "no-referrer"
+			})
+				.then(res => res.json())
+				.then(a => {
+					if (!ignore) return () =>{ setAnswer(a); setFormAnswer({taskRouteId: a[0].id}) };
+				});
+		}
+		fetchProposal();
+		return () => {
+			ignore = true;
+		};
+	}, []);
+
 	return (
 		<ContentArea title="Категории">
 			<section className="dashboard-counts">
@@ -22,10 +58,18 @@ export const CreateCategoryPage = props => {
 									<Form className="w-100">
 										<Form.Group as={Row}>
 											<Form.Label column>
-												Категории
+												Код категории
 											</Form.Label>
 											<Col>
-												<Form.Control type="text"></Form.Control>
+												<Form.Control
+													type="text"
+													onInput={e =>
+														setFormAnswer({
+															...formAnswer,
+															code: e.target.value
+														})
+													}
+												></Form.Control>
 											</Col>
 										</Form.Group>
 										<Form.Group as={Row}>
@@ -33,7 +77,15 @@ export const CreateCategoryPage = props => {
 												Наименование
 											</Form.Label>
 											<Col>
-												<Form.Control type="text"></Form.Control>
+												<Form.Control
+													type="text"
+													onInput={e =>
+														setFormAnswer({
+															...formAnswer,
+															name: e.target.value
+														})
+													}
+												></Form.Control>
 											</Col>
 										</Form.Group>
 										<Form.Group as={Row}>
@@ -41,7 +93,30 @@ export const CreateCategoryPage = props => {
 												Маршрут
 											</Form.Label>
 											<Col>
-												<Form.Control type="text"></Form.Control>
+												<Form.Control
+													as="select"
+													onChange={e => {
+														const item = answer.find(
+															i =>
+																i.name ==
+																e.target.value
+														);
+														item &&
+															setFormAnswer({
+																...formAnswer,
+																taskRouteId:
+																	item.id
+															});
+														debugger;
+													}}
+												>
+													{answer &&
+														answer.map(x => (
+															<option key={x.id}>
+																{x.name}
+															</option>
+														))}
+												</Form.Control>
 											</Col>
 										</Form.Group>
 										<Form.Group as={Row}>
@@ -49,22 +124,42 @@ export const CreateCategoryPage = props => {
 												Приоритет
 											</Form.Label>
 											<Col>
-												<Form.Control as="text"></Form.Control>
+												<Form.Control
+													type="number"
+													onInput={e =>
+														setFormAnswer({
+															...formAnswer,
+															priority: parseInt(
+																e.target.value
+															)
+														})
+													}
+												></Form.Control>
 											</Col>
 										</Form.Group>
 										<Form.Group as={Row}>
-											<Form.Label column>
-												Информация об аварии
-											</Form.Label>
-											<Col>
-												<Form.Control as="text"></Form.Control>
-											</Col>
+											<Form.Check
+												type="checkbox"
+												label="Информация об аварии"
+												type="checkbox"
+												onChange={() =>
+													setFormAnswer({
+														...formAnswer,
+														shouldInformAboutAccident: !formAnswer.shouldInformAboutAccident
+													})
+												}
+											/>
 										</Form.Group>
 										<Form.Group as={Row}>
 											<Button
 												variant="primary"
 												onClick={() => {
-													console.log(answer);
+													debugger
+													sendForm(
+														"categories/new",
+														formAnswer,
+														() => {}
+													);
 												}}
 											>
 												Добавить

@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import { ContentArea } from "./contentArea";
 import { url } from "../helpers/constants";
 import { RecentCard } from "./recentCard";
+import { Link } from "react-router-dom";
 
 export const AllCategory = props => {
 	let [answer, setAnswer] = React.useState([
@@ -48,7 +49,7 @@ export const AllCategory = props => {
 					<div className="card-body">
 						{answer.map((i, idx) => (
 							<div key={idx} className="item d-flex">
-								{i.name}
+								<Link to={`/set_cat/${i.id}`}>{i.name}</Link>
 							</div>
 						))}
 					</div>
