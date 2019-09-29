@@ -8,7 +8,7 @@ export const Footer = props => {
 		<footer className="main-footer">
 			<Container fluid>
 				<Row>
-					<Col md={12}>Хакатон</Col>
+					<Col md={12}>ЦуП</Col>
 				</Row>
 			</Container>
 		</footer>

@@ -18,10 +18,20 @@ export function sendForm(urlPage, body, onSuccess) {
 		.then(answer => onSuccess(answer));
 }
 
-export const findId = (items, name) =>
+export const findIdByName = (items, name) =>
 	items.find(
 		c =>
 			c.name === name.split(" ")[1] &&
 			c.surname === name.split(" ")[0] &&
 			c.middleName === name.split(" ")[2]
 	).id;
+
+export const findById = (items, id) => {
+	return items.find(i => i.id == id);
+};
+
+export const findByCategory = (items, name) =>
+	items.find(c => c.name == name).id;
+
+export const getDate = date =>
+	`${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;

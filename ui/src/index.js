@@ -9,10 +9,14 @@ import { Feedback } from "./components/feedBack";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/style.default.css";
 import "./css/fontastic.css";
-import { NewProposalPage } from "./components/newProposalPage";
+import { NewProposalPage } from "./components/proposals/newProposalPage";
 import { ProposalRoutes } from "./components/proposalRoutes";
 import { ProposalCard } from "./components/proposalCard";
 import { CreateCategoryPage } from "./components/createCategoryPage";
+import { onControlPage } from "./components/proposals/onControl";
+import { onWorkPage } from "./components/proposals/onWork";
+import { onOverduePage } from "./components/proposals/onOverdue";
+import { AllProposalPage } from "./components/proposals/allProposals";
 
 const store = createStore();
 
@@ -23,7 +27,12 @@ render(
 				<Route exact path="/" component={App} />
 				<Route path="/feedback" component={Feedback} />
 				<Route path="/new" component={NewProposalPage} />
+				<Route path="/control" component={onControlPage} />
+				<Route path="/inwork" component={onWorkPage} />
+				<Route path="/overdue" component={onOverduePage} />
+				<Route path="/all" component={AllProposalPage} />
 				<Route path="/set_route" component={ProposalRoutes} />
+				<Route path="/set_cat" component={CreateCategoryPage} />
 				<Route path="/card/:id" component={ProposalCard} />
 				<Route path="/createCategory" component={CreateCategoryPage} />
 			</Switch>

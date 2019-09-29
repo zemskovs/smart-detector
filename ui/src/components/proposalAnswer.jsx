@@ -10,7 +10,7 @@ export const ProposalAnswer = props => {
 				<Form className="w-100">
 					<Form.Group>
 						<Form.Label column>Описание</Form.Label>
-						<Form.Control as="textarea" readOnly />
+						<Form.Control as="textarea" readOnly value={props.text} rows={4} />
 					</Form.Group>
 					{/* <Form.Group>
 						<Form.Label column>Ответ</Form.Label>

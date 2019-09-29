@@ -35,7 +35,7 @@ export const Feedback = props => {
 			<Container style={{ paddingTop: "3em" }}>
 				<Row>
 					<Form className="w-100">
-						<Form.Group controlId="exampleForm.ControlInput1">
+						<Form.Group>
 							<Form.Label>Email</Form.Label>
 							<Form.Control
 								type="email"
@@ -44,7 +44,7 @@ export const Feedback = props => {
 							/>
 						</Form.Group>
 
-						<Form.Group controlId="exampleForm.ControlTextarea1">
+						<Form.Group>
 							<Form.Label>Жалоба</Form.Label>
 							<Form.Control
 								as="textarea"

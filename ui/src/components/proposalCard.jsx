@@ -9,60 +9,94 @@ import { ProposalStatusControl } from "./proposalStatus";
 import { ProposalAnswer } from "./proposalAnswer";
 import { useParams } from "react-router-dom";
 import { url } from "../helpers/constants";
+import { methodProps } from "./proposalRoutes";
+import { findById, findByCategory, getDate } from "../helpers/utils";
 
 export const ProposalCard = props => {
 	let { id } = useParams();
+	let categoryCurrent = React.useRef();
+
+	let [formAnswer, setFormAnswer] = React.useState();
 	let [answer, setAnswer] = React.useState({
-		date: "",
-		category: ["Сантехника"],
-		statuses: [
-			{
-				status: "Заявка зарегистрирована",
-				date: "29.08.2018",
-				type: "reg"
-			}
-		],
-		controlMembers: [""]
+		proposal: {
+			date: "",
+			category: [""],
+			statuses: [
+				{
+					status: "",
+					date: "",
+					type: ""
+				}
+			],
+			controlMembers: [""]
+		},
+		categories: []
 	});
 
 	React.useEffect(() => {
 		let ignore = false;
+
 		function fetchProposal() {
 			return fetch(`${url}requests/${id}`, {
-				method: "GET",
-				mode: "cors",
-				cache: "no-cache",
-				credentials: "same-origin",
-				headers: {
-					"Content-Type": "application/json"
-				},
-				redirect: "follow",
-				referrer: "no-referrer"
-			})
-				.then(res => res.json())
-				.then(a => {
-					if (!ignore) return setAnswer(a);
-				});
+				...methodProps
+			}).then(res => res.json());
 		}
-		fetchProposal();
+
+		function fetchCategories() {
+			return fetch(`${url}categories/all`, {
+				...methodProps
+			}).then(res => res.json());
+		}
+		function fetchRoutes() {
+			return fetch(`${url}routes/all`, {
+				...methodProps
+			}).then(res => res.json());
+		}
+		function fetchExecutors() {
+			return fetch(`${url}executors/all`, {
+				...methodProps
+			}).then(res => res.json());
+		}
+
+		const answerStructure = {
+			0: "categories",
+			1: "routes",
+			2: "executor",
+			3: "proposal"
+		};
+
+		function all() {
+			return Promise.all([
+				fetchCategories(),
+				fetchRoutes(),
+				fetchExecutors(),
+				fetchProposal()
+			]).then(values => {
+				const result = values.reduce(
+					(acc, value, idx) => {
+						acc[answerStructure[idx]] = value;
+						return acc;
+					},
+					{ answer }
+				);
+
+				if (!ignore) return setAnswer(result);
+			});
+		}
+		all();
 		return () => {
 			ignore = true;
 		};
 	}, [id]);
 
 	let proposalID = id;
-	console.log(answer);
-	const { date, statuses, controlMembers, category } = answer;
+	const { text } = answer.proposal;
+	categoryCurrent.current = findById(answer.categories, answer.proposal.id);
 
 	return (
-		<ContentArea>
+		<ContentArea title={`Заявка ${proposalID}`}>
 			<section className="dashboard-counts">
 				<Container fluid>
-					<Row>
-						<Col md={12}>
-							<h3>Заявка {proposalID}</h3>{" "}
-						</Col>
-					</Row>
 					<Row>
 						<Col md={6}>
 							<Row className="bg-white has-shadow">
@@ -75,15 +109,43 @@ export const ProposalCard = props => {
 											<Form.Control
 												as="select"
 												onChange={e =>
-													setAnswer({
-														...answer,
-														type: e.target.value
+													setFormAnswer({
+														...formAnswer,
+														categoryId: findByCategory(
+															answer.categories,
+															e.target.value
+														)
 													})
 												}
 											>
-												{category.map(x => (
-													<option key={x}>{x}</option>
-												))}
+												{categoryCurrent.current && (
+													<option>
+														{
+															categoryCurrent
+																.current.name
+														}
+													</option>
+												)}
+												{answer.categories &&
+													answer.categories
+														.filter(
+															i =>
+																i.id !=
+																answer.proposal
+																	.id
+														)
+														.map((x, idx) => {
+															return (
+																<option
+																	key={
+																		x.name +
+																		idx
+																	}
+																>
+																	{x.name}
+																</option>
+															);
+														})}
 											</Form.Control>
 										</Col>
 									</Form.Group>
@@ -96,14 +158,9 @@ export const ProposalCard = props => {
 											<Form.Control
 												type="text"
 												readOnly
-												value={date}
-												onInput={e =>
-													setAnswer({
-														...answer,
-														timeStart:
-															e.target.value
-													})
-												}
+												defaultValue={getDate(
+													new Date()
+												)}
 											/>
 										</Col>
 									</Form.Group>
@@ -114,6 +171,7 @@ export const ProposalCard = props => {
 										<Col>
 											<Form.Control
 												type="number"
+												defaultValue={24}
 												onInput={e =>
 													setAnswer({
 														...answer,
@@ -129,34 +187,19 @@ export const ProposalCard = props => {
 											Исполнитель
 										</Form.Label>
 										<Col>
-											<Form.Control
-												as="select"
-												onChange={e =>
-													setAnswer({
-														...answer,
-														type: e.target.value
-													})
-												}
-											>
-												{controlMembers.map(x => (
-													<option key={x}>{x}</option>
-												))}
+											<Form.Control as="select">
+												{answer.executor &&
+													answer.executor.map(
+														(x, idx) => (
+															<option
+																key={
+																	x.surname +
+																	idx
+																}
+															>{`${x.surname} ${x.name} ${x.middleName}`}</option>
+														)
+													)}
 											</Form.Control>
-										</Col>
-									</Form.Group>
-									<Form.Group as={Row}>
-										<Form.Label column>Адрес</Form.Label>
-										<Col>
-											<Form.Control
-												type="text"
-												onInput={e =>
-													setAnswer({
-														...answer,
-														timeImplement:
-															e.target.value
-													})
-												}
-											/>
 										</Col>
 									</Form.Group>
 								</Form>
@@ -164,12 +207,19 @@ export const ProposalCard = props => {
 						</Col>
 
 						<Col md={6}>
-							<ProposalStatusControl items={statuses} />
+							<ProposalStatusControl
+								items={[
+									{
+										status: "Заявка зарегистрирована",
+										type: "in_progress"
+									}
+								]}
+							/>
 						</Col>
 					</Row>
 					<Row>
 						<Col md={12}>
-							<ProposalAnswer />
+							<ProposalAnswer text={text} />
 						</Col>
 					</Row>
 					<Row>
@@ -179,12 +229,17 @@ export const ProposalCard = props => {
 									<Button
 										variant="primary"
 										onClick={() => {
-											fetch(`${url}requests/${id}`, {
-												method: "UPDATE",
-												body: JSON.stringify({
-													task_status: "in_progress"
-												})
-											});
+											fetch(
+												`${url}requests/update/${id}`,
+												{
+													method: "UPDATE",
+													body: JSON.stringify({
+														...formAnswer,
+														task_status:
+															"in_progress"
+													})
+												}
+											);
 										}}
 									>
 										Взять в работу

@@ -9,6 +9,7 @@ import { ContentArea } from "./contentArea";
 import { AddFrom } from "./addFrom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { AddFromForm } from "./addFromForm";
 
 export class ExpertPage extends React.Component {
 	componentDidMount() {}
@@ -17,6 +18,7 @@ export class ExpertPage extends React.Component {
 		return (
 			<ContentArea>
 				<AddFrom />
+				<AddFromForm />
 			</ContentArea>
 		);
 	}

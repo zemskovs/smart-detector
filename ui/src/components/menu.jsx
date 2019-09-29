@@ -4,6 +4,11 @@ import { ToggleListItem } from "./list";
 
 const menuItems = [
 	{
+		icon: "icon-home",
+		name: "Главная",
+		ref: "/",
+	},
+	{
 		icon: "icon-padnote",
 		name: "Заявки",
 		ref: "/",
@@ -31,7 +36,7 @@ const menuItems = [
 		]
 	},
 	{
-		icon: "icon-home",
+		icon: "icon-grid",
 		name: "Настройки",
 		ref: "/",
 		items: [
@@ -44,16 +49,6 @@ const menuItems = [
 				ref: "/set_route"
 			}
 		]
-	},
-	{
-		icon: "icon-home",
-		name: "Аналитика",
-		ref: "/analytics"
-	},
-	{
-		icon: "icon-home",
-		name: "Администрирование",
-		ref: "/"
 	}
 ];
 
