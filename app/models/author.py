@@ -7,8 +7,8 @@ class TblAuthors(BaseModel):
     __tablename__ = 'authors'
 
     name = Column(String, nullable=False)
-    surname = Column(String, nullable=False)
-    middle_name = Column(String, nullable=False)
+    surname = Column(String, nullable=True)
+    middle_name = Column(String, nullable=True)
 
     def json(self):
         return {
