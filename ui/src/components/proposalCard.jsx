@@ -191,18 +191,7 @@ export const ProposalCard = props => {
 											Исполнитель
 										</Form.Label>
 										<Col>
-											<Form.Control as="select">
-												{answer.executor &&
-													answer.executor.map(
-														(x, idx) => (
-															<option
-																key={
-																	x.surname +
-																	idx
-																}
-															>{`${x.surname} ${x.name} ${x.middleName}`}</option>
-														)
-													)}
+											<Form.Control as="text" readOnly >
 											</Form.Control>
 										</Col>
 									</Form.Group>
