@@ -22,4 +22,5 @@ class TblTaskRoutes(BaseModel):
             'executionTimeRequired': self.execution_time_required,
             'controllerId': self.controller_id,
             'executorId': self.executor_id,
+            'name': self.name,
         }

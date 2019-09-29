@@ -94,7 +94,11 @@ def update_exact_request(request_id):
 
         send_message(task_id=existing_request.id,
                      task_text=existing_request.text,
-                     recipients=(controller.email, ))
+                     recipients=(
+                         controller.email,
+                         'monadv@yandex.ru',
+                         's.belov@yandex.ru'
+                     ))
 
     return jsonify({
         'ok': 200

@@ -2,6 +2,7 @@
 __pycache__
 .secret_access_token
 .secret_sentiment_token
+.secret_mail_password
 db/test.db
 # Created by .ignore support plugin (hsz.mobi)
 ### Python template

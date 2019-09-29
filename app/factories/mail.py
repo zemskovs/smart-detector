@@ -8,7 +8,7 @@ def get_mail():
 get_mail.MAIL = Mail()
 
 
-def init_db_app(app):
+def init_mail_app(app):
     mail = get_mail()
     with app.app_context():
         mail.init_app(app)
