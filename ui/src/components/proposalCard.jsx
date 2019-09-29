@@ -191,7 +191,7 @@ export const ProposalCard = props => {
 											Исполнитель
 										</Form.Label>
 										<Col>
-											<Form.Control as="text" readOnly >
+											<Form.Control type="text" readOnly defaultValue={}>
 											</Form.Control>
 										</Col>
 									</Form.Group>
