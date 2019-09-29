@@ -90,15 +90,18 @@ def update_exact_request(request_id):
     category = TblTaskCategories.query.get(existing_request.category_id)
     if category.task_route_id:
         route = TblTaskRoutes.query.get(category.task_route_id)
-        controller = TblTaskRoutes.query.get(route.controller_id)
+        controller = TblControllers.query.get(route.controller_id)
+
+        recipients = [
+            'monadv@yandex.ru',
+            's.belov@yandex.ru'
+        ]
+        if controller.email:
+            recipients.append(controller.email)
 
         send_message(task_id=existing_request.id,
                      task_text=existing_request.text,
-                     recipients=(
-                         controller.email,
-                         'monadv@yandex.ru',
-                         's.belov@yandex.ru'
-                     ))
+                     recipients=recipients)
 
     return jsonify({
         'ok': 200
