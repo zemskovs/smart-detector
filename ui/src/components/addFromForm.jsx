@@ -12,7 +12,7 @@ export const AddFromForm = props => {
 	let history = useHistory();
 
 	return (
-		<section className="dashboard-counts pt-0" >
+		<section className="dashboard-counts pt-0">
 			<Container fluid>
 				<Row>
 					<Col md={12} lg={8}>
@@ -27,23 +27,26 @@ export const AddFromForm = props => {
 									/>
 								</Form.Group>
 								<Form.Group as={Col}>
-								<Button
-									variant="primary"
-									onClick={() =>
-										sendForm(
-											"requests/new",
-											{
-												socialNetwork: "email",
-												text: query
-											},
-											res => {
-												history.push(`/card/${res.id}`);
-											}
-										)
-									}
-								>
-									Отправить
-								</Button>
+									<Button
+										variant="primary"
+										onClick={() =>
+											sendForm(
+												"requests/new",
+												{
+													socialNetwork: "email",
+													text: query,
+													name: "Пользователь 1"
+												},
+												res => {
+													history.push(
+														`/card/${res.id}`
+													);
+												}
+											)
+										}
+									>
+										Отправить
+									</Button>
 								</Form.Group>
 							</Form>
 						</Row>

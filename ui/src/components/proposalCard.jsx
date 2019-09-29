@@ -232,10 +232,10 @@ export const ProposalCard = props => {
 											fetch(
 												`${url}requests/update/${id}`,
 												{
-													method: "UPDATE",
+													method: "POST",
 													body: JSON.stringify({
 														...formAnswer,
-														task_status:
+														taskStatus:
 															"in_progress"
 													})
 												}

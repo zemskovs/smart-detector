@@ -14,6 +14,11 @@ const menuItems = [
 		ref: "/",
 		items: [
 			{
+				name: "Создать",
+				ref: "/"
+			},
+
+			{
 				name: "Новые",
 				ref: "/new"
 			},
