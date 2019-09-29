@@ -1,4 +1,5 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 
 export const RecentCard = props => (
 	<div className="recent-updates card">
@@ -13,7 +14,7 @@ export const RecentCard = props => (
 							<i className="icon-rss-feed"></i>
 						</div>
 						<div className="title">
-							<h5>Заявка {p.id}.</h5>
+							<Link to={`card/${p.id}`}><h5>Заявка {p.id}.</h5></Link>
 							<p>{p.text}</p>
 						</div>
 					</div>
