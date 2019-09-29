@@ -7,13 +7,14 @@ import Col from "react-bootstrap/Col";
 import { ContentArea } from "./contentArea";
 import { ProposalStatusControl } from "./proposalStatus";
 import { ProposalAnswer } from "./proposalAnswer";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { url } from "../helpers/constants";
 import { methodProps } from "./proposalRoutes";
 import { findById, findByCategory, getDate } from "../helpers/utils";
 
 export const ProposalCard = props => {
 	let { id } = useParams();
+	let history = useHistory();
 	let categoryCurrent = React.useRef();
 
 	let [formAnswer, setFormAnswer] = React.useState();
@@ -92,7 +93,10 @@ export const ProposalCard = props => {
 	let proposalID = id;
 	const { text } = answer.proposal;
 	categoryCurrent.current = findById(answer.categories, answer.proposal.id);
-
+	const statusTypeToName = {
+		new: "Новая заявка",
+		in_progress: "В работе"
+	};
 	return (
 		<ContentArea title={`Заявка ${proposalID}`}>
 			<section className="dashboard-counts">
@@ -208,12 +212,18 @@ export const ProposalCard = props => {
 
 						<Col md={6}>
 							<ProposalStatusControl
-								items={[
-									{
-										status: "Заявка зарегистрирована",
-										type: "in_progress"
-									}
-								]}
+								items={
+									answer.proposal.statuses.map((x, idx) => ({
+										status:
+											statusTypeToName[x.newTaskStatus],
+										type: x.newTaskStatus
+									})) || [
+										{
+											status: "Заявка зарегистрирована",
+											type: "in_progress"
+										}
+									]
+								}
 							/>
 						</Col>
 					</Row>
@@ -228,31 +238,30 @@ export const ProposalCard = props => {
 								<div style={{ paddingRight: "3em" }}>
 									{answer.proposal &&
 										answer.proposal.taskStatus == "new" && (
-											<div className="pr-3">
-												<Button
-													variant="primary"
-													onClick={() => {
-														const body = {
-															...formAnswer,
-															taskStatus:
-																"in_progress"
-														};
+											<Button
+												variant="primary"
+												onClick={() => {
+													const body = {
+														...formAnswer,
+														taskStatus:
+															"in_progress"
+													};
 
-														fetch(
-															`${url}requests/update/${id}`,
-															{
-																...methodProps,
-																method: "POST",
-																body: JSON.stringify(
-																	body
-																)
-															}
-														);
-													}}
-												>
-													Взять в работу
-												</Button>
-											</div>
+													fetch(
+														`${url}requests/update/${id}`,
+														{
+															...methodProps,
+															method: "POST",
+															body: JSON.stringify(
+																body
+															)
+														}
+													);
+													location.reload();
+												}}
+											>
+												Взять в работу
+											</Button>
 										)}
 									<Button
 										variant="primary"
