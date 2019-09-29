@@ -8,16 +8,18 @@ import Button from "react-bootstrap/Button";
 import { AllCategory } from "./allCategory";
 import { url } from "../helpers/constants";
 import { sendForm } from "../helpers/utils";
+import { useHistory } from "react-router-dom";
 
 export const CreateCategoryPage = props => {
+	let history = useHistory();
 	let [answer, setAnswer] = React.useState([
 		{
 			id: null
 		}
 	]);
-	let [formAnswer, setFormAnswer] = React.useState({
-		shouldInformAboutAccident: false
-	});
+	let [formAnswer, setFormAnswer] = React.useState();
+	const [, updateState] = React.useState();
+	const forceUpdate = React.useCallback(() => updateState({}), []);
 
 	React.useEffect(() => {
 		let ignore = false;
@@ -35,7 +37,13 @@ export const CreateCategoryPage = props => {
 			})
 				.then(res => res.json())
 				.then(a => {
-					if (!ignore) return () =>{ setAnswer(a); setFormAnswer({taskRouteId: a[0].id}) };
+					if (!ignore) {
+						setAnswer(a);
+						setFormAnswer({
+							taskRouteId: a[0].id,
+							shouldInformAboutAccident: false
+						});
+					}
 				});
 		}
 		fetchProposal();
@@ -154,11 +162,13 @@ export const CreateCategoryPage = props => {
 											<Button
 												variant="primary"
 												onClick={() => {
-													debugger
 													sendForm(
 														"categories/new",
 														formAnswer,
 														() => {}
+													);
+													history.push(
+														"/allCategory"
 													);
 												}}
 											>

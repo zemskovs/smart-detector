@@ -49,7 +49,7 @@ export const AllCategory = props => {
 					<div className="card-body">
 						{answer.map((i, idx) => (
 							<div key={idx} className="item d-flex">
-								<Link to={`/set_cat/${i.id}`}>{i.name}</Link>
+								<Link to={`/all_cat/${i.id}`}>{i.name}</Link>
 							</div>
 						))}
 					</div>
@@ -57,7 +57,7 @@ export const AllCategory = props => {
 			) : (
 				<Row className="bg-white has-shadow">
 					<Col md={12}>
-						<h3>Нет маршрутов</h3>
+						<h3>Нет категорий</h3>
 					</Col>
 				</Row>
 			)}
