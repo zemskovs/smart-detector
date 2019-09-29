@@ -52,30 +52,37 @@ def fill_database():
 
     task_category1 = TblTaskCategories()
     task_category1.name='Сантехнические работы'
+    task_category1.task_route_id = route1.id
     write_record(task_category1, get_db().session)
 
     task_category2 = TblTaskCategories()
     task_category2.name='Малярные работы'
+    task_category2.task_route_id = route1.id
     write_record(task_category1, get_db().session)
 
     task_category3 = TblTaskCategories()
     task_category3.name='Облицовочные работы'
+    task_category3.task_route_id = route1.id
     write_record(task_category3, get_db().session)
 
     task_category4 = TblTaskCategories()
     task_category4.name='Обойные работы'
+    task_category4.task_route_id = route1.id
     write_record(task_category4, get_db().session)
 
     task_category5 = TblTaskCategories()
     task_category5.name='Плотничные работы'
+    task_category5.task_route_id = route1.id
     write_record(task_category5, get_db().session)
 
     task_category6 = TblTaskCategories()
     task_category6.name='Стекольные работы'
+    task_category6.task_route_id = route1.id
     write_record(task_category6, get_db().session)
 
     task_category7 = TblTaskCategories()
     task_category7.name='Штукатурные работы'
+    task_category7.task_route_id = route1.id
     write_record(task_category7, get_db().session)
 
     task_category8 = TblTaskCategories()
@@ -85,6 +92,7 @@ def fill_database():
 
     task_category8 = TblTaskCategories()
     task_category8.name='Электромонтажные работы'
+    task_category8.task_route_id = route1.id
     write_record(task_category8, get_db().session)
 
     request1 = TblRequests()
