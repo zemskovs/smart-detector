@@ -25,7 +25,7 @@ def home():
 @app.route('/requests/new', methods=['POST', 'GET'])
 def import_from_post():
     data = request.get_json()
-    if True:  # not data:
+    if not data:
         data = {
             'socialNetwork': 'vk',
             'fromUrl': 'https://vk.com/club184648030?w=wall-184648030_32%2Fall',
