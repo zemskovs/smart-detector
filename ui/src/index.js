@@ -19,6 +19,7 @@ import { onOverduePage } from "./components/proposals/onOverdue";
 import { AllProposalPage } from "./components/proposals/allProposals";
 import { AllCategoryPage } from "./components/allCategoryPage";
 import { EditCategoryPage } from "./components/editCategory";
+import { RouteInfoPage } from "./components/routeInfo";
 
 const store = createStore();
 
@@ -35,6 +36,7 @@ render(
 				<Route path="/all" component={AllProposalPage} />
 				<Route path="/allCategory" component={AllCategoryPage} />
 				<Route path="/set_route" component={ProposalRoutes} />
+				<Route path="/all_route/:id" component={RouteInfoPage} />
 				<Route exact path="/set_cat" component={CreateCategoryPage} />
 				<Route path="/all_cat/:id" component={EditCategoryPage} />
 				<Route path="/card/:id" component={ProposalCard} />

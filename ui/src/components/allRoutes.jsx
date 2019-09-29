@@ -5,11 +5,13 @@ import Col from "react-bootstrap/Col";
 import { ContentArea } from "./contentArea";
 import { url } from "../helpers/constants";
 import { RecentCard } from "./recentCard";
+import { Link } from "react-router-dom";
 
 export const AllRoutes = props => {
 	let [answer, setAnswer] = React.useState([
 		{
-			id: null
+			id: null,
+			name: null
 		}
 	]);
 
@@ -48,7 +50,7 @@ export const AllRoutes = props => {
 					<div className="card-body">
 						{answer.map((i, idx) => (
 							<div key={idx} className="item d-flex">
-								Маршрут {i.id}
+								<Link to={`/all_route/${i.id}`}>{i.name}</Link>
 							</div>
 						))}
 					</div>
