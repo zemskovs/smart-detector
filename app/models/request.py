@@ -32,5 +32,6 @@ class TblRequests(BaseModel):
             'taskStatus': self.task_status.value,
             'isOnControl': self.on_control,
             'statuses': statuses,
-            'executorId': executor.id
+            'executorId': executor.id,
+            'executorName': '{} {} {}'.format(executor.surname, executor.name, executor.middleName)
         }
