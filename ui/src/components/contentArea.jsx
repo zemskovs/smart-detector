@@ -9,14 +9,14 @@ import { Footer } from "./footer";
 export const ContentArea = props => {
 	return (
 		<div className="page">
-			<Navbar title="Личный кабинет" />
+			<Navbar title="Умная CRM для предприятий ЖКХ" />
 			<div className="page-content d-flex align-items-stretch">
 				<Menu />
 
 				<div className="content-inner active">
 					<header className="page-header">
 						<Container fluid>
-							<h2 className="no-margin-bottom">{props.title || "Дашборд"}</h2>
+							<h2 className="no-margin-bottom">{props.title || "SMART DETECTOR"}</h2>
 						</Container>
 					</header>
 					{props.children}

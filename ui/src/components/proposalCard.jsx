@@ -231,10 +231,10 @@ export const ProposalCard = props => {
 					<Row>
 						<Col md={12}>
 							<Row>
-								<div style={{ paddingRight: "3em" }}>
+								<div style={{ paddingRight: "3em" }} className="d-flex">
 									{answer.proposal &&
 										answer.proposal.taskStatus == "new" && (
-											<Button
+											<div className="pr-3"><Button
 												variant="primary"
 												onClick={() => {
 													const body = {
@@ -257,7 +257,7 @@ export const ProposalCard = props => {
 												}}
 											>
 												Взять в работу
-											</Button>
+											</Button></div>
 										)}
 									<Button
 										variant="primary"
