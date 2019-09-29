@@ -33,5 +33,5 @@ class TblRequests(BaseModel):
             'isOnControl': self.on_control,
             'statuses': statuses,
             'executorId': executor.id,
-            'executorName': '{} {} {}'.format(executor.surname, executor.name, executor.middleName)
+            'executorName': '{} {} {}'.format(executor.surname, executor.name, executor.middle_name)
         }
