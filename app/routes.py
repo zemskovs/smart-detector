@@ -83,7 +83,8 @@ def update_exact_request(request_id):
     write_record(change, get_db().session)
 
     existing_request.task_status = StatusEnum(data['taskStatus'])
-    existing_request.category_id = data['categoryId']
+    if 'categoryId' in data:
+        existing_request.category_id = data['categoryId']
     write_record(existing_request, get_db().session)
 
     category = TblTaskCategories.query.get(existing_request.category_id)
