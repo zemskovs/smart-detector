@@ -233,12 +233,12 @@ export const ProposalCard = props => {
 												...formAnswer,
 												taskStatus: "in_progress"
 											};
-											debugger;
+
 											fetch(
 												`${url}requests/update/${id}`,
 												{
-													method: "POST",
 													...methodProps,
+													method: "POST",
 													body: JSON.stringify(body)
 												}
 											);
