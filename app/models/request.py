@@ -3,7 +3,9 @@ from sqlalchemy import Column, Text, Integer, ForeignKey, Boolean
 from app.models.base import BaseModel
 from app.models.author import TblAuthors
 from app.models.enumerates import STATUS_ENUM_SCHEMA, StatusEnum
+from app.models.executor import TblExecutors
 from app.models.status_changes import TblStatusChanges
+from app.models.task_category import TblTaskCategories
 
 
 class TblRequests(BaseModel):
@@ -20,6 +22,8 @@ class TblRequests(BaseModel):
             .order_by(TblStatusChanges.creation_time.desc())\
             .all()
         statuses = [change.json() for change in changes]
+        category = TblTaskCategories.query.get(self.category_id)
+        executor = TblExecutors.query.get(category.task_route_id)
         return {
             'id': self.id,
             'text': self.text,
@@ -27,5 +31,6 @@ class TblRequests(BaseModel):
             'categoryId': self.category_id,
             'taskStatus': self.task_status.value,
             'isOnControl': self.on_control,
-            'statuses': statuses
+            'statuses': statuses,
+            'executorId': executor.id
         }
