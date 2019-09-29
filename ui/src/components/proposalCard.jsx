@@ -229,15 +229,17 @@ export const ProposalCard = props => {
 									<Button
 										variant="primary"
 										onClick={() => {
+											const body = {
+												...formAnswer,
+												taskStatus: "in_progress"
+											};
+											debugger;
 											fetch(
 												`${url}requests/update/${id}`,
 												{
 													method: "POST",
-													body: JSON.stringify({
-														...formAnswer,
-														taskStatus:
-															"in_progress"
-													})
+													...methodProps,
+													body: JSON.stringify(body)
 												}
 											);
 										}}
