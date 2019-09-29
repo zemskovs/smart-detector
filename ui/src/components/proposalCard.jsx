@@ -29,7 +29,8 @@ export const ProposalCard = props => {
 					type: ""
 				}
 			],
-			controlMembers: [""]
+			controlMembers: [""],
+			executorName: ""
 		},
 		categories: []
 	});
@@ -97,6 +98,7 @@ export const ProposalCard = props => {
 		new: "Новая заявка",
 		in_progress: "В работе"
 	};
+
 	return (
 		<ContentArea title={`Заявка ${proposalID}`}>
 			<section className="dashboard-counts">
@@ -191,8 +193,13 @@ export const ProposalCard = props => {
 											Исполнитель
 										</Form.Label>
 										<Col>
-											<Form.Control type="text" readOnly defaultValue={}>
-											</Form.Control>
+											<Form.Control
+												type="text"
+												readOnly
+												defaultValue={
+													answer.proposal.executorName
+												}
+											></Form.Control>
 										</Col>
 									</Form.Group>
 								</Form>
@@ -202,7 +209,7 @@ export const ProposalCard = props => {
 						<Col md={6}>
 							<ProposalStatusControl
 								items={
-									answer.proposal.statuses.map((x, idx) => ({
+									answer.proposal.statuses && answer.proposal.statuses.map((x, idx) => ({
 										status:
 											statusTypeToName[x.newTaskStatus],
 										type: x.newTaskStatus
