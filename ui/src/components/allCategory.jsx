@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Link } from 'react-router-dom';
 import { ContentArea } from './contentArea';
-import { url } from '../helpers/constants';
+import { url } from '../modules/helpers/constants';
 import { RecentCard } from './recentCard';
 
 export const AllCategory = (props) => {

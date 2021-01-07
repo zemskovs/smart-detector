@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ContentArea } from '../../components/contentArea';
 import { useParams } from 'react-router-dom';
-import { url } from '../../helpers/constants';
+import { url } from '../../modules/helpers/constants';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';

@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
-import { url } from '../../helpers/constants';
+import { url } from '../../modules/helpers/constants';
 import { Navbar } from '../../components/navbar';
 import { Footer } from '../../components/footer';
 

@@ -6,8 +6,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { AllCategory } from '../../components/allCategory';
-import { url } from '../../helpers/constants';
-import { sendForm } from '../../helpers/utils';
+import { url } from '../../modules/helpers/constants';
+import { sendForm } from '../../modules/helpers/utils';
 import { useHistory } from 'react-router-dom';
 
 export const CreateCategoryPage = (props) => {

@@ -6,10 +6,10 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { AllCategory } from '../../components/allCategory';
-import { url } from '../../helpers/constants';
-import { sendForm } from '../../helpers/utils';
+import { url } from '../../modules/helpers/constants';
+import { sendForm } from '../../modules/helpers/utils';
 import { useHistory, useParams } from 'react-router-dom';
-import { findById } from '../../helpers/utils';
+import { findById } from '../../modules/helpers/utils';
 import { methodProps } from '../../components/proposalRoutes';
 
 export const EditCategoryPage = (props) => {
